@@ -1,0 +1,25 @@
+{
+  "name": "atividade04-cicd",
+  "version": "1.0.0",
+  "description": "Atividade 04 - CI/CD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeMonkeysCorp/Atividade04-CICD.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodeMonkeysCorp/Atividade04-CICD/issues"
+  },
+  "homepage": "https://github.com/CodeMonkeysCorp/Atividade04-CICD#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
