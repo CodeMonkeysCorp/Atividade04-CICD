@@ -12,6 +12,12 @@ const pool = new Pool({
   database: "livros_db",  // nome do banco
   password: "senha_aqui", // tua senha
   port: 5432,
+//  Rotas CRUD
+
+// GET todos os livros
+app.get('/books', async (req, res) => {
+  const books = await Book.getAll();
+  res.json(books);
 });
 
 // --- ROTAS CRUD ---
@@ -98,3 +104,12 @@ app.delete("/books/:id", async (req, res) => {
 app.listen(3000, () =>
   console.log("🚀 Servidor rodando em http://localhost:3000")
 );
+// 🔧 Só inicia o servidor fora do ambiente de teste
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+}
+
+// Exportar o app para o Jest
+export default app;
