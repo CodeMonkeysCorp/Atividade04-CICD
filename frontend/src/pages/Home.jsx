@@ -15,7 +15,7 @@ function Formulario() {
   const criarOuAlterar = async () => {
   try {
     const response = await fetch('ROTA_CRIAR_ALTERAR', {
-      method: 'POST', // ou PUT se for alterar
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,11 +36,11 @@ function Formulario() {
 const remover = async () => {
   try {
     const response = await fetch('ROTA_REMOVER', {
-      method: 'DELETE', // normalmente DELETE
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ Título: valores['Título'] }), // enviar apenas o identificador
+      body: JSON.stringify({ Título: valores['Título'] }),
     })
 
     if (!response.ok) throw new Error('Erro ao remover')
