@@ -1,32 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './Home.css'
+import { useState } from "react";
+import "./Home.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+function Formulario() {
+  const campos = ['Título', 'Descrição', 'Autor', 'Páginas']
+
+  const [valores, setValores] = useState(
+    campos.reduce((acc, campo) => ({ ...acc, [campo]: '' }), {})
+  )
+
+  const handleChange = (campo) => (e) => {
+    setValores({ ...valores, [campo]: e.target.value })
+  }
+
+  const criarOuAlterar = async () => {
+  try {
+    const response = await fetch('ROTA_CRIAR_ALTERAR', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(valores),
+    })
+
+    if (!response.ok) throw new Error('Erro ao criar/alterar')
+
+    const data = await response.json()
+    console.log('Resposta do backend:', data)
+    alert('Livro criado/alterado com sucesso!')
+  } catch (err) {
+    console.error(err)
+    alert('Erro ao criar/alterar')
+  }
+}
+
+const remover = async () => {
+  try {
+    const response = await fetch('ROTA_REMOVER', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ Título: valores['Título'] }),
+    })
+
+    if (!response.ok) throw new Error('Erro ao remover')
+
+    const data = await response.json()
+    console.log('Resposta do backend:', data)
+    alert('Livro removido com sucesso!')
+  } catch (err) {
+    console.error(err)
+    alert('Erro ao remover')
+  }
+}
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      {campos.map((campo) => (
+        <div className="itemLista" key={campo}>
+          <p>{campo}:</p>
+          <input
+            className="inputTxt"
+            type="text"
+            value={valores[campo]}
+            onChange={handleChange(campo)}
+          />
+        </div>
+      ))}
+
+      <div className="itemLista">
+        <button onClick={criarOuAlterar}>Criar/Alterar</button>
+        <button onClick={remover}>Remover</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      
+    </div>
   )
 }
 
-export default App
+function Home() {
+  return (
+    <>
+      <p class="header">Alterar Livro</p>
+      <div class="listaPrincipal">
+        <Formulario />
+      </div>
+    </>
+  );
+}
+
+export default Home;
