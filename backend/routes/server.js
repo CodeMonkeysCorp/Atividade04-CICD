@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// 🔹 Rotas CRUD
+//  Rotas CRUD
 
 // GET todos os livros
 app.get('/books', async (req, res) => {
@@ -43,6 +43,12 @@ app.delete('/books/:id', async (req, res) => {
   res.status(204).send();
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+// 🔧 Só inicia o servidor fora do ambiente de teste
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+  });
+}
+
+// Exportar o app para o Jest
+export default app;
